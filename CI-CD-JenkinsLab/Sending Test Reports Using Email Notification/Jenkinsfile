@@ -22,7 +22,9 @@ pipeline {
 
         stage('Test') {
             steps {
+                dir('CI-CD-JenkinsLab/Sending Test Reports Using Email Notification'){
                 sh 'mvn test'
+                }
             }
         }
     }
