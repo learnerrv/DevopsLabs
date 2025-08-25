@@ -43,6 +43,7 @@ pipeline {
             dir("CI-CD-JenkinsLab/Sending Test Reports Using Email Notification") {
             junit 'target/surefire-reports/*.xml'
         }
+        }
 
         success {
             emailext(
