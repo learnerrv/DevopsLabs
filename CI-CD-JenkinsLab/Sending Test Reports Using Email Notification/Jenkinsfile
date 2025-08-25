@@ -32,7 +32,7 @@ pipeline {
     post {
         always {
             // Publish JUnit test reports
-            junit 'target/surefire-reports/*.xml'
+            junit CI-CD-JenkinsLab/Sending Test Reports Using Email Notification/target/surefire-reports/*.xml'
         }
 
         success {
