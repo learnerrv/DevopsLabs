@@ -31,7 +31,7 @@ pipeline {
             steps {
                 dir("CI-CD-JenkinsLab/Sending Test Reports Using Email Notification"){
                 sh 'mvn test'
-                sh 'ls -R CI-CD-JenkinsLab/Sending Test Reports Using Email Notification/target'
+                sh 'ls -R "CI-CD-JenkinsLab/Sending Test Reports Using Email Notification/target"'
                 }
             }
         }
@@ -40,7 +40,8 @@ pipeline {
     post {
         always {
             // Publish JUnit test reports
-            junit "CI-CD-JenkinsLab/Sending Test Reports Using Email Notification/target/surefire-reports/*.xml"
+            dir("CI-CD-JenkinsLab/Sending Test Reports Using Email Notification") {
+            junit 'target/surefire-reports/*.xml'
         }
 
         success {
