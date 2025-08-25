@@ -1,1 +1,58 @@
+pipeline {
+    agent any
 
+    tools {
+        maven 'Maven3'   // Maven tool must be configured in Jenkins Global Tools
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/learnerrv/firstpublicrepo.git'
+            }
+        }
+
+        stage('Compile') {
+            steps {
+                sh 'mvn clean compile'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+    }
+
+    post {
+        always {
+            // Publish JUnit test reports
+            junit 'target/surefire-reports/*.xml'
+        }
+
+        success {
+            emailext(
+                subject: "✅ SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """<p>Hello Team,</p>
+                         <p>The build <b>#${env.BUILD_NUMBER}</b> for job <b>${env.JOB_NAME}</b> 
+                         has completed successfully.</p>
+                         <p>Check the details <a href="${env.BUILD_URL}">here</a>.</p>
+                         <p>Regards,<br/>Jenkins</p>""",
+                to: "cilom78683@chaublog.com"
+            )
+        }
+
+        failure {
+            emailext(
+                subject: "❌ FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """<p>Hello Team,</p>
+                         <p>The build <b>#${env.BUILD_NUMBER}</b> for job <b>${env.JOB_NAME}</b> 
+                         has <b>FAILED</b>.</p>
+                         <p>Check the details <a href="${env.BUILD_URL}">here</a>.</p>
+                         <p>Regards,<br/>Jenkins</p>""",
+                to: "cilom78683@chaublog.com"
+            )
+        }
+    }
+}
