@@ -12,6 +12,13 @@ pipeline {
             }
         }
 
+        stage('List repo contents') {
+            steps {
+                sh 'ls -R'
+            }
+        }
+
+
         stage('Compile') {
             steps {
                 dir("CI-CD-JenkinsLab/Sending Test Reports Using Email Notification"){
