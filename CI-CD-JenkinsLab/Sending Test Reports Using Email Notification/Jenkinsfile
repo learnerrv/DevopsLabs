@@ -24,6 +24,7 @@ pipeline {
             steps {
                 dir('CI-CD-JenkinsLab/Sending Test Reports Using Email Notification'){
                 sh 'mvn test'
+                sh 'ls -R CI-CD-JenkinsLab/Sending Test Reports Using Email Notification/target'
                 }
             }
         }
